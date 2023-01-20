@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Images\icon-add.png" />
+    <None Remove="Assets\Images\icon-logo-black.png" />
+    <None Remove="Assets\Images\icon-logo-white.png" />
+    <None Remove="Assets\Images\icon-move.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\icon-add.png" />
+    <Resource Include="Assets\Images\icon-logo-black.png" />
+    <Resource Include="Assets\Images\icon-logo-white.png" />
+    <Resource Include="Assets\Images\icon-move.png" />
+  </ItemGroup>
+
+</Project>

@@ -38,8 +38,10 @@ namespace WiredBrainCoffee.CustomersApp.Views
 		/// </summary>
 		private void OnClickMove(object sender, RoutedEventArgs e)
 		{
-			int finalCol = MainGrid.ColumnDefinitions.Count - 1;
-			Grid.SetColumn(CustomerList, Grid.GetColumn(CustomerList) > 0 ? 0 : finalCol);
+			//int finalCol = MainGrid.ColumnDefinitions.Count - 1;
+			//Grid.SetColumn(CustomerList, Grid.GetColumn(CustomerList) > 0 ? 0 : finalCol);
+
+			_viewModel.MoveNavigation();
 		}
 
 		private void OnCustomerAdd(object sender, RoutedEventArgs e)

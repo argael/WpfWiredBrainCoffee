@@ -14,26 +14,33 @@ namespace WiredBrainCoffee.CustomersApp.ViewModels
 	/// <summary>
 	/// Class used to bind the data from Models to the XAML View
 	/// </summary>
-	public class CustomersViewModel : INotifyPropertyChanged
+	public class CustomersViewModel : BaseViewModel
 	{
 		private readonly ICustomerDataProvider _customerDataProvider;
 
-		public event PropertyChangedEventHandler? PropertyChanged;
+		/// <summary>
+		/// The customer list
+		/// </summary>
+		/// <remarks>
+		/// This collection reflect (by event) the content from the DataProvider
+		/// </remarks>
+		public ObservableCollection<CustomerItemViewModel> Customers { get; } = new();
 
 		/// <summary>
-		/// This collection reflect (by event) the content from the DataProvider
+		/// The Selected Item in the Customer List
 		/// </summary>
-		public ObservableCollection<Customer> Customers { get; } = new();
-
-		private Customer? _selectedCustomer;
-		public Customer? SelectedCustomer { 
-			get => _selectedCustomer; 
-			set { 
-				_selectedCustomer = value;
-				RaisePropertyChanged();
-			} 
+		public CustomerItemViewModel? SelectedCustomer
+		{
+			get => _selectedCustomer;
+			set { _selectedCustomer = value; RaisePropertyChanged(); }
 		}
+		private CustomerItemViewModel? _selectedCustomer;
 
+		/// <summary>
+		/// The column where place the "Navigation" panel
+		/// </summary>
+		public NavigationPosition NavigationPosition { get => _navigationPosition; private set { _navigationPosition = value; RaisePropertyChanged(); } }
+		private NavigationPosition _navigationPosition;
 
 		/// <summary>
 		/// Constructor that use DI to register DataProvider
@@ -53,23 +60,23 @@ namespace WiredBrainCoffee.CustomersApp.ViewModels
 				return;
 
 			foreach (Customer customer in customers)
-			{
-				Customers.Add(customer);
-			}
+				Customers.Add(new(customer));
 		}
+
+		// ==================================================================================================================
 
 		internal void Add()
 		{
-			Customer customer = new() { FirstName = "new" };
+			CustomerItemViewModel customer = new(new() { FirstName = "new" });
 			Customers.Add(customer);
 			SelectedCustomer = customer;
-
-			//RaisePropertyChanged(nameof(SelectedCustomer));
 		}
 
-		private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+		// ==================================================================================================================
+
+		internal void MoveNavigation()
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			NavigationPosition = NavigationPosition == NavigationPosition.Left ? NavigationPosition.Right : NavigationPosition.Left;
 		}
 	}
 }

@@ -21,7 +21,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal">
-                <Button Margin="10">
+                <Button Click="OnCustomerAdd"
+                    Margin="10">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Assets/Images/icon-add.png" Height="16" Margin="0 0 4 0"/>
                         <TextBlock Text="Add"/>
@@ -32,20 +33,25 @@
                     <Image Source="/Assets/Images/icon-move.png" Height="16"/>
                 </Button>
             </StackPanel>
-            <ListView Grid.Row="1" Margin="10 0 10 10">
-                <ListViewItem>Joe</ListViewItem>
-                <ListViewItem>Jane</ListViewItem>
-                <ListViewItem>John</ListViewItem>
-            </ListView>
+            <ListView x:Name="CustomerListView" 
+                      ItemsSource="{Binding Path=Customers}" DisplayMemberPath="FirstName"
+                      SelectedItem="{Binding Path=SelectedCustomer}"
+                      Grid.Row="1" Margin="10 0 10 10"/>
+            <!-- Bind the items from the liste with the Customer collection 
+                 and the SelectedItem with the SelectedCustomer in the ViewModel -->
+
         </Grid>
 
-        <!-- Customer Detail -->
         <StackPanel Margin="10" Grid.Row="2" Grid.Column="1">
+        <!-- Customer Detail -->
             <Label>Firstname:</Label>
-            <TextBox />
+            <TextBox Text="{Binding Path=SelectedCustomer.FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            
             <Label>Lastname:</Label>
-            <TextBox />
-            <CheckBox Margin="0 10 0 0">Is Developer</CheckBox>
+            <TextBox Text="{Binding Path=SelectedCustomer.LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            
+            <CheckBox IsChecked="{Binding SelectedCustomer.IsDeveloper}"
+                      Margin="0 10 0 0">Is Developer</CheckBox>
         </StackPanel>
     </Grid>
 </UserControl>
